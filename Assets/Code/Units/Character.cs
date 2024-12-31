@@ -24,7 +24,7 @@ namespace GA.Platformer
 		[SerializeField]
 		private float weightLimit = 1;
 
-		[SerializeField, Tooltip("The damage player causes to enemies")]
+		[SerializeField, Tooltip("The damage player deals to enemies")]
 		private int damage = 10;
 
 		// Member variable. It is owned by the object itself.
@@ -177,6 +177,16 @@ namespace GA.Platformer
 			if (enemySensor.IsActive)
 			{
 				Debug.Log($"Attacking {enemySensor.ActiveUnit}");
+			
+				if (!enemySensor.ActiveUnit.Health.DecreaseHealth(damage))
+				{
+				// Enemy died
+				enemySensor.ActiveUnit.Die();
+				}
+				else
+				{
+					enemySensor.ActiveUnit.ApplyDamage();
+				}
 			}
 		}
 

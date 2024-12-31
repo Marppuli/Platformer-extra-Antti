@@ -22,6 +22,8 @@ namespace GA.Platformer
 		[SerializeField]
 		private Sensor groundSensor;
 
+		private IHealth health;
+
 		[SerializeField]
 		private ParticleSystem damageEffect;
 
@@ -34,6 +36,8 @@ namespace GA.Platformer
 		private new Rigidbody2D rigidbody;
 
 		private new SpriteRenderer renderer;
+
+		public IHealth Health { get { return health; } }
 
 		private new AudioSource audio;
 
@@ -55,6 +59,12 @@ namespace GA.Platformer
 			}
 
 			Collider = GetComponent<Collider2D>();
+
+			health = GetComponent<IHealth>();
+			if (health == null)
+			{
+				Debug.LogError("Can't find a component which implements the IHealth interface!");
+			}
 
 			if (GroundSensor == null)
 			{
